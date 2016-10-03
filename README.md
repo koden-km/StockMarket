@@ -1,7 +1,7 @@
-web-stockmarket
+StockMarket
 ===============
 
-Remake the Stock Market board game online
+Remake the Stock Market board game using Unity Engine.
 
 ## Rules
 
