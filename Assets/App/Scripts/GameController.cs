@@ -11,7 +11,8 @@ namespace App
 		//private BoardManager Board;
 	
 		public GameOptions Options;
-		public GameState State;
+
+		public GameModel Game;
 
 		void Start()
 		{

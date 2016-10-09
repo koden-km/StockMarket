@@ -10,6 +10,8 @@ namespace App
 
 		public BoardTileMoveOption MoveOption;
 
+		public UnityEngine.Color Color;
+
 		public string MainTitle;
 
 		public string SubTitle;
@@ -19,6 +21,9 @@ namespace App
 		public CompanyType? Company;
 
 		public int Dividend;
+
+		// $100 fee for landing on Start.
+		//public int Fee;
 
 		/// <summary>
 		/// The previous board tile.
@@ -50,13 +55,14 @@ namespace App
 			ShareMeeting = null;
 		}
 
-		public static BoardTile Create(
+		public static BoardTile CreateJob(
 			TileType tile,
 			JobType job,
 			GameOptions options
 		)
 		{
 			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Job);
+			bt.Color = Color.white;
 			bt.SetupTitleJob(options, job);
 			bt.Job = job;
 			bt.Company = null;
@@ -64,20 +70,50 @@ namespace App
 			return bt;
 		}
 
-		public static BoardTile Create(
+		public static BoardTile CreateCompany(
 			TileType tile,
 			BoardTileMoveOption moveOption,
 			CompanyType company,
 			int dividend,
 			GameOptions options
-
 		)
 		{
 			BoardTile bt = new BoardTile(tile, moveOption);
-			bt.SetupTitleTrade(options, company);
+			bt.Color = options.Companies[company].Color;
+			bt.SetupTitleTrade(options, company, tile);
 			bt.Job = null;
 			bt.Company = company;
 			bt.Dividend = dividend;
+			return bt;
+		}
+
+		public static BoardTile CreateCompanyMeeting(
+			TileType tile,
+			GameOptions options
+		)
+		{
+			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Left | BoardTileMoveOption.Right);
+			// TODO
+			return bt;
+		}
+
+		public static BoardTile CreateStart(
+			TileType tile,
+			GameOptions options
+		)
+		{
+			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Left | BoardTileMoveOption.Right);
+			// TODO
+			return bt;
+		}
+
+		public static BoardTile CreateBrokerFee(
+			TileType tile,
+			GameOptions options
+		)
+		{
+			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Right);
+			// TODO
 			return bt;
 		}
 
@@ -103,35 +139,29 @@ namespace App
 
 		private void SetupTitleJob(GameOptions options, JobType job)
 		{
-//			MainTitle = jobNames[Job];
-//			switch (Job) {
-//			case JobType.Worker100:
-//				SubTitle = "5 or 9 pays $100 salary";
-//				break;
-//			case JobType.Worker200:
-//				SubTitle = "5 or 9 pays $100 salary";
-//				break;
-//			case JobType.Worker300:
-//				SubTitle = "5 or 9 pays $100 salary";
-//				break;
-//			case JobType.Worker400:
-//				SubTitle = "5 or 9 pays $100 salary";
-//				break;
-//			}
-
 			JobDetail jobDetail = options.Jobs[job];
 			MainTitle = jobDetail.Title;
 			SubTitle = jobDetail.PayoutDescription();
 		}
 
-		private void SetupTitleTrade(GameOptions options, CompanyType company)
+		private void SetupTitleTrade(GameOptions options, CompanyType company, TileType tile)
 		{
 			// TODO: deal with the Sell All and single buy tiles?
 
 			CompanyDetail companyDetail = options.Companies[company];
-			MainTitle = companyDetail.Name;
-			SubTitle = "";
+
+			if (tile == TileType.SellAllCompany) {
+				MainTitle = "Sell All\n" + companyDetail.Name;
+				SubTitle = "At minimum per share";
+			} else if (tile == TileType.BuyOne) {
+				MainTitle = companyDetail.Name;
+				SubTitle = "Purchase limit 1 share";
+			} else {
+				MainTitle = companyDetail.Name;
+				SubTitle = "";
+			}
 		}
+
 	}
 
 }

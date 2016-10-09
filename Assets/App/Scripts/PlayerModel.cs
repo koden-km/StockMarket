@@ -12,6 +12,11 @@ namespace App
 		public string Name;
 
 		/// <summary>
+		/// The token color of the player.
+		/// </summary>
+		public UnityEngine.Color Color;
+
+		/// <summary>
 		/// The amount of cash this player currently has.
 		/// </summary>
 		public int Cash;
@@ -44,10 +49,24 @@ namespace App
 		public PlayerModel(string name)
 		{
 			Name = name;
+			Color = UnityEngine.Color.white;
 			Cash = 0;
 			BoardTileIndex = 0;
 			Job = JobType.Worker100;
 			Shares = new Dictionary<CompanyType, int>();
+			ShareHolderMeeting = null;
+		}
+
+		/// <summary>
+		/// Resets to default values.
+		/// Can be used when bankrupt and/or going back to work.
+		/// </summary>
+		public void ResetToDefault()
+		{
+			Cash = 0;
+			BoardTileIndex = 0;
+			Job = JobType.Worker100;
+			Shares.Clear();
 			ShareHolderMeeting = null;
 		}
 

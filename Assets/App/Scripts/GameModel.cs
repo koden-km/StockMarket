@@ -7,7 +7,7 @@ namespace App
 	/// <summary>
 	/// Game state. Storage for keep track of current game state.
 	/// </summary>
-	public class GameState
+	public class GameModel
 	{
 		public GameOptions Options;
 		public BoardManager Board;
@@ -34,17 +34,17 @@ namespace App
 		/// </summary>
 		public int PriceIndexChange = 0;
 
-		private GameState(GameOptions options, BoardManager board)
+		private GameModel(GameOptions options, BoardManager board)
 		{
 			Options = options;
 			Board = board;
 		}
 
-		public static GameState Create(GameOptions options)
+		public static GameModel Create(GameOptions options)
 		{
 			BoardManager board = BoardManager.CreateBoard(options);
-			GameState state = new GameState(options, board);
-			return state;
+			GameModel gameModel = new GameModel(options, board);
+			return gameModel;
 		}
 
 	}

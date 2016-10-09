@@ -38,10 +38,10 @@ namespace App
 			board.m_BoardTiles = new BoardTile[88];
 
 			// Setup job tiles ...
-			board.m_BoardTiles[0] = BoardTile.Create(TileType.Job, JobType.Worker100, options);
-			board.m_BoardTiles[1] = BoardTile.Create(TileType.Job, JobType.Worker200, options);
-			board.m_BoardTiles[2] = BoardTile.Create(TileType.Job, JobType.Worker300, options);
-			board.m_BoardTiles[3] = BoardTile.Create(TileType.Job, JobType.Worker400, options);
+			board.m_BoardTiles[0] = BoardTile.CreateJob(TileType.Job, JobType.Worker100, options);
+			board.m_BoardTiles[1] = BoardTile.CreateJob(TileType.Job, JobType.Worker200, options);
+			board.m_BoardTiles[2] = BoardTile.CreateJob(TileType.Job, JobType.Worker300, options);
+			board.m_BoardTiles[3] = BoardTile.CreateJob(TileType.Job, JobType.Worker400, options);
 
 			// Setup game board edge tiles ...
 			// TODO

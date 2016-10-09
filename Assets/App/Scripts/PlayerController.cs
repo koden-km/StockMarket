@@ -6,47 +6,47 @@ namespace App
 
 	public class PlayerController
 	{
-		private PlayerModel playerModel;
+		private PlayerModel m_PlayerModel;
 
 		public PlayerController(PlayerModel player)
 		{
-			playerModel = player;
+			m_PlayerModel = player;
 		}
 
 		public int CurrentCash()
 		{
-			return playerModel.Cash;
+			return m_PlayerModel.Cash;
 		}
 
 		public bool HasCash()
 		{
-			return playerModel.Cash > 0;
+			return m_PlayerModel.Cash > 0;
 		}
 
 		public bool HasCash(int amount)
 		{
-			return playerModel.Cash >= amount;
+			return m_PlayerModel.Cash >= amount;
 		}
 
 		public void SetCash(int amount)
 		{
-			playerModel.Cash = amount;
+			m_PlayerModel.Cash = amount;
 		}
 
 		public void AddCash(int amount)
 		{
-			playerModel.Cash += amount;
+			m_PlayerModel.Cash += amount;
 		}
 
 		public void SubtractCash(int amount)
 		{
-			playerModel.Cash -= amount;
+			m_PlayerModel.Cash -= amount;
 		}
 
 		public int CurrentShares(CompanyType company)
 		{
 			int count = 0;
-			playerModel.Shares.TryGetValue(company, out count);
+			m_PlayerModel.Shares.TryGetValue(company, out count);
 			return count;
 		}
 
@@ -62,24 +62,24 @@ namespace App
 
 		public void SetShares(CompanyType company, int count)
 		{
-			playerModel.Shares[company] = count;
+			m_PlayerModel.Shares[company] = count;
 		}
 
 		public void AddShares(CompanyType company, int count)
 		{
-			if (playerModel.Shares.ContainsKey(company)) {
-				playerModel.Shares[company] += count;
+			if (m_PlayerModel.Shares.ContainsKey(company)) {
+				m_PlayerModel.Shares[company] += count;
 			} else {
-				playerModel.Shares[company] = count;
+				m_PlayerModel.Shares[company] = count;
 			}
 		}
 
 		public void SubtractShares(CompanyType company, int count)
 		{
-			if (playerModel.Shares.ContainsKey(company)) {
-				playerModel.Shares[company] -= count;
+			if (m_PlayerModel.Shares.ContainsKey(company)) {
+				m_PlayerModel.Shares[company] -= count;
 			} else {
-				playerModel.Shares[company] = count;
+				m_PlayerModel.Shares[company] = count;
 			}
 		}
 
@@ -98,7 +98,7 @@ namespace App
 		public int CalculateValueTotalStock(StockPriceTier stockPrice)
 		{
 			int total = 0;
-			foreach (KeyValuePair<CompanyType,int> pair in playerModel.Shares) {
+			foreach (KeyValuePair<CompanyType,int> pair in m_PlayerModel.Shares) {
 				total += CalculateValueCurrentShares(stockPrice, pair.Key);
 			}
 			return total;
@@ -150,6 +150,26 @@ namespace App
 			return value;
 		}
 
+		public int CalculateBrokerFee()
+		{
+			const int fee = 10;
+			int shares = 0;
+			foreach (KeyValuePair<CompanyType,int> pair in m_PlayerModel.Shares) {
+				shares += pair.Value;
+			}
+			return shares * fee;
+		}
+
+		public bool CanAffordBrokerFee()
+		{
+			return HasCash(CalculateBrokerFee());
+		}
+
+		public void GoBackToWork()
+		{
+			m_PlayerModel.ResetToDefault();
+		}
+
 		public bool DoTurn()
 		{
 			// TODO
@@ -181,7 +201,7 @@ namespace App
 			//   Else If borker fee
 			//      Pay broker fee, may need to sell shares at base price
 			//   Else must be a start square
-			//      Do nothing
+			//      Pay 100 fee if already a trader, not on changing from work to start
 			//
 			// When finished turn return true.
 			// return true
