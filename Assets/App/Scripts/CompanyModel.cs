@@ -5,7 +5,7 @@ namespace App
 	/// <summary>
 	/// Company details.
 	/// </summary>
-	public class CompanyDetail
+	public class CompanyModel
 	{
 		/// <summary>
 		/// The company type.
@@ -23,12 +23,12 @@ namespace App
 		public UnityEngine.Color Color;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="App.CompanyDetail"/> class.
+		/// Initializes a new instance.
 		/// </summary>
 		/// <param name="company">Company type.</param>
 		/// <param name="name">Name of company.</param>
 		/// <param name="color">Color of company.</param>
-		public CompanyDetail(CompanyType company, string name, UnityEngine.Color color)
+		public CompanyModel(CompanyType company, string name, UnityEngine.Color color)
 		{
 			Company = company;
 			Name = name;

@@ -8,7 +8,7 @@ namespace App
 	{
 		public TileType Tile;
 
-		public BoardTileMoveOption MoveOption;
+		public BoardTileMoveFlags MoveFlags;
 
 		public UnityEngine.Color Color;
 
@@ -43,10 +43,10 @@ namespace App
 		/// </summary>
 		public BoardTile ShareMeeting;
 
-		private BoardTile(TileType tile, BoardTileMoveOption moveOption)
+		private BoardTile(TileType tile, BoardTileMoveFlags moveFlags)
 		{
 			Tile = tile;
-			MoveOption = moveOption;
+			MoveFlags = moveFlags;
 			MainTitle = string.Empty;
 			SubTitle = string.Empty;
 
@@ -58,12 +58,12 @@ namespace App
 		public static BoardTile CreateJob(
 			TileType tile,
 			JobType job,
-			GameOptions options
+			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Job);
+			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Job);
 			bt.Color = Color.white;
-			bt.SetupTitleJob(options, job);
+			bt.SetupTitleJob(game, job);
 			bt.Job = job;
 			bt.Company = null;
 			bt.Dividend = 0;
@@ -72,15 +72,15 @@ namespace App
 
 		public static BoardTile CreateCompany(
 			TileType tile,
-			BoardTileMoveOption moveOption,
+			BoardTileMoveFlags moveFlags,
 			CompanyType company,
 			int dividend,
-			GameOptions options
+			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, moveOption);
-			bt.Color = options.Companies[company].Color;
-			bt.SetupTitleTrade(options, company, tile);
+			BoardTile bt = new BoardTile(tile, moveFlags);
+			bt.Color = game.Companies[company].Color;
+			bt.SetupTitleTrade(game, company, tile);
 			bt.Job = null;
 			bt.Company = company;
 			bt.Dividend = dividend;
@@ -89,30 +89,30 @@ namespace App
 
 		public static BoardTile CreateCompanyMeeting(
 			TileType tile,
-			GameOptions options
+			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Left | BoardTileMoveOption.Right);
+			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Left | BoardTileMoveFlags.Right);
 			// TODO
 			return bt;
 		}
 
 		public static BoardTile CreateStart(
 			TileType tile,
-			GameOptions options
+			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Left | BoardTileMoveOption.Right);
+			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Left | BoardTileMoveFlags.Right);
 			// TODO
 			return bt;
 		}
 
 		public static BoardTile CreateBrokerFee(
 			TileType tile,
-			GameOptions options
+			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Right);
+			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Right);
 			// TODO
 			return bt;
 		}
@@ -137,18 +137,18 @@ namespace App
 			return false;
 		}
 
-		private void SetupTitleJob(GameOptions options, JobType job)
+		private void SetupTitleJob(GameModel game, JobType job)
 		{
-			JobDetail jobDetail = options.Jobs[job];
+			JobModel jobDetail = game.Jobs[job];
 			MainTitle = jobDetail.Title;
 			SubTitle = jobDetail.PayoutDescription();
 		}
 
-		private void SetupTitleTrade(GameOptions options, CompanyType company, TileType tile)
+		private void SetupTitleTrade(GameModel game, CompanyType company, TileType tile)
 		{
 			// TODO: deal with the Sell All and single buy tiles?
 
-			CompanyDetail companyDetail = options.Companies[company];
+			CompanyModel companyDetail = game.Companies[company];
 
 			if (tile == TileType.SellAllCompany) {
 				MainTitle = "Sell All\n" + companyDetail.Name;

@@ -13,6 +13,11 @@ namespace App
 			m_PlayerModel = player;
 		}
 
+		public void SetPlayer(PlayerModel player)
+		{
+			m_PlayerModel = player;
+		}
+
 		public int CurrentCash()
 		{
 			return m_PlayerModel.Cash;

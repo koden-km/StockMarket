@@ -4,62 +4,40 @@ using System.Collections.Generic;
 namespace App
 {
 
-	public class BoardManager
+	public class BoardController
 	{
-		/// <summary>
-		/// The stock price table.
-		/// </summary>
-		private StockPriceTier[] m_PriceTable;
+		private BoardModel m_BoardModel;
 
-		/// <summary>
-		/// The lowest stock price for each company type.
-		/// This is used for certain game events where players need to sell at lowest price;
-		/// </summary>
-		private StockPriceTier m_LowestPrice;
-
-		/// <summary>
-		/// The board tiles.
-		///  4 - Job tiles.
-		/// 48 - Outer tiles around board edge.
-		/// 36 - Share holder meeting tiles (4 groups of 9 meeting tiles).
-		/// Equals 88 total game board tiles.
-		/// </summary>
-		private BoardTile[] m_BoardTiles;
-
-		private BoardManager()
+		//public BoardController(BoardModel boardModel, GameOptions options)
+		public BoardController(BoardModel boardModel, GameModel gameModel)
 		{
-		}
+			m_BoardModel = boardModel;
 
-		public static BoardManager CreateBoard(GameOptions options)
-		{
-			BoardManager board = new BoardManager();
-			board.SetupStockPriceTable();
+			SetupStockPriceTable();
 
-			board.m_BoardTiles = new BoardTile[88];
+			m_BoardModel.BoardTiles = new BoardTile[88];
 
 			// Setup job tiles ...
-			board.m_BoardTiles[0] = BoardTile.CreateJob(TileType.Job, JobType.Worker100, options);
-			board.m_BoardTiles[1] = BoardTile.CreateJob(TileType.Job, JobType.Worker200, options);
-			board.m_BoardTiles[2] = BoardTile.CreateJob(TileType.Job, JobType.Worker300, options);
-			board.m_BoardTiles[3] = BoardTile.CreateJob(TileType.Job, JobType.Worker400, options);
+			m_BoardModel.BoardTiles[0] = BoardTile.CreateJob(TileType.Job, JobType.Worker100, gameModel);
+			m_BoardModel.BoardTiles[1] = BoardTile.CreateJob(TileType.Job, JobType.Worker200, gameModel);
+			m_BoardModel.BoardTiles[2] = BoardTile.CreateJob(TileType.Job, JobType.Worker300, gameModel);
+			m_BoardModel.BoardTiles[3] = BoardTile.CreateJob(TileType.Job, JobType.Worker400, gameModel);
 
 			// Setup game board edge tiles ...
 			// TODO
 
 			// Setup share holder meeting tiles ...
 			// TODO
-
-			return board;
 		}
 
 		public StockPriceTier StockPriceAtIndex(int index)
 		{
-			return m_PriceTable[index];
+			return m_BoardModel.PriceTable[index];
 		}
 
 		public StockPriceTier StockPriceAtLowest()
 		{
-			return m_LowestPrice;
+			return m_BoardModel.LowestPrice;
 		}
 
 		private void SetupStockPriceTable()
@@ -71,7 +49,7 @@ namespace App
 			int iAlpha;
 			int iOmega;
 
-			m_PriceTable = new StockPriceTier[count];  // 51 tiers on original board.
+			m_BoardModel.PriceTable = new StockPriceTier[count];  // 51 tiers on original board.
 
 			for (int i = 0; i < count; i++) {
 				// 8 companies (4 on each side of board).
@@ -90,7 +68,7 @@ namespace App
 				prices[6] = priceTiers[iOmega, 2];
 				prices[7] = priceTiers[iOmega, 3];
 
-				m_PriceTable[i] = new StockPriceTier(prices);
+				m_BoardModel.PriceTable[i] = new StockPriceTier(prices);
 			}
 
 			// 8 companies (4 on each side of board).
@@ -108,7 +86,7 @@ namespace App
 			prices[5] = priceTiers[iOmega, 1];
 			prices[6] = priceTiers[iOmega, 2];
 			prices[7] = priceTiers[iOmega, 3];
-			m_LowestPrice = new StockPriceTier(prices);
+			m_BoardModel.LowestPrice = new StockPriceTier(prices);
 		}
 
 		/// <summary>

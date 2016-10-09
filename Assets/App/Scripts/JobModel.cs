@@ -2,10 +2,7 @@
 namespace App
 {
 
-	/// <summary>
-	/// Job details.
-	/// </summary>
-	public class JobDetail
+	public class JobModel
 	{
 		public JobType Job;
 
@@ -17,7 +14,7 @@ namespace App
 
 		public int PayRollB;
 
-		public JobDetail(JobType job, string title, int salary, int rollA, int rollB)
+		public JobModel(JobType job, string title, int salary, int rollA, int rollB)
 		{
 			Job = job;
 			Title = title;

@@ -3,7 +3,7 @@ namespace App
 {
 
 	[System.Flags]
-	public enum BoardTileMoveOption
+	public enum BoardTileMoveFlags
 	{
 		/// <summary>
 		/// Can move to any other job when player is working.
