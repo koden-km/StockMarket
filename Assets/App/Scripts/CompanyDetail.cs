@@ -13,9 +13,6 @@ namespace App
 
 		//public UnityEngine.Color Color;
 
-		// The current stock price?
-		//public int StockPrice;
-
 		//public CompanyDetail(CompanyType company, string name, UnityEngine.Color color)
 		public CompanyDetail(CompanyType company, string name)
 		{

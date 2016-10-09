@@ -57,7 +57,7 @@ namespace App
 		)
 		{
 			BoardTile bt = new BoardTile(tile, BoardTileMoveOption.Job);
-			bt.SetupTitleJob(options);
+			bt.SetupTitleJob(options, job);
 			bt.Job = job;
 			bt.Company = null;
 			bt.Dividend = 0;
@@ -74,7 +74,7 @@ namespace App
 		)
 		{
 			BoardTile bt = new BoardTile(tile, moveOption);
-			bt.SetupTitleTrade(options);
+			bt.SetupTitleTrade(options, company);
 			bt.Job = null;
 			bt.Company = company;
 			bt.Dividend = dividend;
@@ -101,7 +101,7 @@ namespace App
 			return false;
 		}
 
-		private void SetupTitleJob(GameOptions options)
+		private void SetupTitleJob(GameOptions options, JobType job)
 		{
 //			MainTitle = jobNames[Job];
 //			switch (Job) {
@@ -119,16 +119,18 @@ namespace App
 //				break;
 //			}
 
-			JobDetail jobDetail = options.Jobs[Job];
+			JobDetail jobDetail = options.Jobs[job];
 			MainTitle = jobDetail.Title;
 			SubTitle = jobDetail.PayoutDescription();
 		}
 
-		private string SetupTitleTrade(GameOptions options)
+		private void SetupTitleTrade(GameOptions options, CompanyType company)
 		{
-			return "TODO";
+			// TODO: deal with the Sell All and single buy tiles?
 
-			//CompanyType
+			CompanyDetail companyDetail = options.Companies[company];
+			MainTitle = companyDetail.Name;
+			SubTitle = "";
 		}
 	}
 

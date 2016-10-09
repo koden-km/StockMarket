@@ -17,11 +17,6 @@ namespace App
 		public int Cash;
 
 		/// <summary>
-		/// The current value of held stock.
-		/// </summary>
-		//public int StockValue;
-
-		/// <summary>
 		/// The index of the board tile the player is currently at.
 		/// </summary>
 		public int BoardTileIndex;
@@ -50,7 +45,6 @@ namespace App
 		{
 			Name = name;
 			Cash = 0;
-			//StockValue = 0;
 			BoardTileIndex = 0;
 			Job = JobType.Worker100;
 			Shares = new Dictionary<CompanyType, int>();

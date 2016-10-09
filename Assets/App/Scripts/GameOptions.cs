@@ -21,9 +21,9 @@ namespace App
 			Companies = new Dictionary<CompanyType, CompanyDetail>();
 
 			Jobs[JobType.Worker100] = new JobDetail(JobType.Worker100, "Policeman", 100, 5, 9);
-			Jobs[JobType.Worker200] = new JobDetail(JobType.Worker200, "Doctor", 100, 4, 10);
-			Jobs[JobType.Worker300] = new JobDetail(JobType.Worker300, "Deep Sea Diver", 100, 3, 11);
-			Jobs[JobType.Worker400] = new JobDetail(JobType.Worker400, "Prospector", 100, 2, 12);
+			Jobs[JobType.Worker200] = new JobDetail(JobType.Worker200, "Doctor", 200, 4, 10);
+			Jobs[JobType.Worker300] = new JobDetail(JobType.Worker300, "Deep Sea Diver", 300, 3, 11);
+			Jobs[JobType.Worker400] = new JobDetail(JobType.Worker400, "Prospector", 400, 2, 12);
 
 			Companies[CompanyType.AlphaA] = new CompanyDetail(CompanyType.AlphaA, "Alcoa");
 			Companies[CompanyType.AlphaB] = new CompanyDetail(CompanyType.AlphaB, "Bank of NSW");
