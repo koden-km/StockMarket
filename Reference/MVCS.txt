@@ -1,0 +1,15 @@
+Model      - There can be storage and view versions of models.
+View       - The UI. It asks controller for data and sends events to controller to manipulate.
+Controller - Handles requests to fetch data and to perform manipulation using services.
+Service    - Each specific business logic operation is its own service. They can reuse other services to perform their operation. eg. BalanceAdjusterService, ShareBrokerService.
+
+I've also seen some mentions of Application in the MVC type patterns.
+I think it was kind of like a singleton for getting to the rest of the components?
+
+Logic flow example:
+- User performs action within view (eg. click button).
+- View says "need data" to controller.
+- Controller says "need data" to service.
+- Service responds with model(s).
+- Controller puts models onto viewmodel (or puts models directly onto view).
+- View renders viewmodels.
