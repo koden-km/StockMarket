@@ -15,19 +15,19 @@ namespace App
 
 			SetupStockPriceTable();
 
-			m_BoardModel.BoardTiles = new BoardTile[88];
+			m_BoardModel.BoardTiles = new BoardTileModel[88];
 
 			// Setup job tiles ...
-			m_BoardModel.BoardTiles[0] = BoardTile.CreateJob(TileType.Job, JobType.Worker100, gameModel);
-			m_BoardModel.BoardTiles[1] = BoardTile.CreateJob(TileType.Job, JobType.Worker200, gameModel);
-			m_BoardModel.BoardTiles[2] = BoardTile.CreateJob(TileType.Job, JobType.Worker300, gameModel);
-			m_BoardModel.BoardTiles[3] = BoardTile.CreateJob(TileType.Job, JobType.Worker400, gameModel);
+			m_BoardModel.BoardTiles[0] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker100, gameModel);
+			m_BoardModel.BoardTiles[1] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker200, gameModel);
+			m_BoardModel.BoardTiles[2] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker300, gameModel);
+			m_BoardModel.BoardTiles[3] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker400, gameModel);
 
-			// Setup game board edge tiles ...
-			// TODO
+			// Setup game board trader tiles ...
+			// TODO, set them up clockwise or counter-clockwise starting at the stock price UP.
 
 			// Setup share holder meeting tiles ...
-			// TODO
+			// TODO, set them up in the same direction as board trader tiles.
 		}
 
 		public StockPriceTier StockPriceAtIndex(int index)

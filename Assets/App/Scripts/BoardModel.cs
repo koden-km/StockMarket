@@ -24,7 +24,7 @@ namespace App
 		/// 36 - Share holder meeting tiles (4 groups of 9 meeting tiles).
 		/// Equals 88 total game board tiles.
 		/// </summary>
-		public BoardTile[] BoardTiles;
+		public BoardTileModel[] BoardTiles;
 
 		public BoardModel()
 		{

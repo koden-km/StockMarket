@@ -33,7 +33,7 @@ namespace App
 		/// <summary>
 		/// The current player index who's turn it is.
 		/// </summary>
-		public int CurrentPlayer = 0;
+		public int CurrentPlayerIndex = 0;
 
 		/// <summary>
 		/// The current index of the stock price table.
@@ -47,10 +47,16 @@ namespace App
 		/// </summary>
 		public int PriceIndexChange = 0;
 
+		/// <summary>
+		/// The winning net worth amount.
+		/// To win the game, a player must have a net worth of this value at their turn to roll the dice.
+		/// </summary>
+		public int WinningNetWorthAmount = 100000;
+
 		public GameModel()
 		{
-			Jobs = new Dictionary<JobType, JobModel>();
-			Companies = new Dictionary<CompanyType, CompanyModel>();
+			Jobs = new Dictionary<JobType, JobModel>(4);
+			Companies = new Dictionary<CompanyType, CompanyModel>(8);
 
 			Jobs[JobType.Worker100] = new JobModel(JobType.Worker100, "Policeman", 100, 5, 9);
 			Jobs[JobType.Worker200] = new JobModel(JobType.Worker200, "Doctor", 200, 4, 10);
@@ -71,10 +77,18 @@ namespace App
 
 			Players = new List<PlayerModel>();
 
-			CurrentPlayer = 0;
+			CurrentPlayerIndex = 0;
 			CurrentPriceIndex = 0;
 			PriceIndexChange = 0;
 		}
+
+		//		/// <summary>
+		//		/// Resets to default values.
+		//		/// Can be used when starting a new game.
+		//		/// </summary>
+		//		public void ResetToDefault()
+		//		{
+		//		}
 
 	}
 

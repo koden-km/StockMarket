@@ -4,26 +4,45 @@ using System.Collections.Generic;
 namespace App
 {
 
+	// TODO: this should be a plain C# class (not MonoBehaviour) according to some Unity MVC tutorials.
+	// The view classes should be MonoBehaviour's that send events here.
+
 	public class GameController : MonoBehaviour
 	{
 		/// <summary>
 		/// The game model.
 		/// </summary>
-		public GameModel m_Game;
+		private GameModel m_Game;
 
-		// TODO: Not sure where to put this?
-		public PlayerController m_PlayerController;
+		private GameService m_GameService;
 
-		// TODO: Not sure where to put this?
-		public BoardController m_GameBoard;
+		private PlayerService m_PlayerService;
 
-		// TODO: Not sure where to put this?
-		public BoardView m_BoardView;
+		// TODO: Not sure if needed and/or where to put this?
+		//public PlayerController m_PlayerController;
+
+		// TODO: Not sure if needed and/or where to put this?
+		//public BoardController m_GameBoard;
+
+		// TODO: Not sure if needed and/or where to put this?
+		//public BoardView m_BoardView;
+
+		// TODO: Not sure if needed and/or where to put this?
+		//public PlayerView m_PlayerView;
 
 		void Start()
 		{
-			m_BoardView = Instantiate<BoardView>(m_BoardView);
-			m_BoardView.transform.SetParent(this.transform);
+			m_Game = new GameModel();
+
+			m_GameService = new GameService(m_Game);
+
+			m_PlayerService = new PlayerService();
+
+			//m_PlayerController = new PlayerController();
+
+			// TODO: hook up view handlers?
+			//m_BoardView = Instantiate<BoardView>(m_BoardView);
+			//m_BoardView.transform.SetParent(this.transform);
 		}
 
 		// TODO: do this as an enumerator?
@@ -32,52 +51,80 @@ namespace App
 			// TickGame();
 		}
 
+		// TODO: should these be named as event handlers? OnCreatePlayer(..) ?
 		public void CreatePlayer(string name)
 		{
-			// TODO...
-			//m_Game.Players.Add(new PlayerModel(name));
+			m_GameService.AddPlayer(name);
 		}
 
+		// TODO: should these be named as event handlers? OnXxxx(..) ?
 		public void RemovePlayer(string name)
 		{
-			// TODO...
+			m_GameService.RemovePlayer(name);
+
+			// TODO: check this.
+			// If the current player leaves then this needs to switch to the next player.
+			// But make sure this doesn't continue/resume some player turn operation(s) on the newly switched player.
+			UpdateCurrentPlayer();
 		}
 
-		public void UpdatePlayerController()
-		{
-			if (m_Game.Players.Count > 0) {
-				m_PlayerController.SetPlayer(m_Game.Players[m_Game.CurrentPlayer]);
-			} else {
-				m_PlayerController = null;
-			}
-		}
-
+		// TODO: should these be named as event handlers? OnXxxx(..) ?
 		public void NewGame()
 		{
 			Debug.Log("Setup New Game ...");
 			
 			CleanupCurrentGame();
 
-			// Setup new game.
-			//State = GameState.Create(Options);
+			// TODO: Setup new game. just load the scene again?
+			// * Init game model.
+			// * Create board.
 		}
 
+		// TODO: should these be named as event handlers? OnXxxx(..) ?
 		public void LoadGame()
 		{
 			Debug.Log("Load Existing Game ...");
 
 			CleanupCurrentGame();
 
-			// TODO: Load existing saved game data
-			//State = GameState.Create(Options);
+			// TODO: Load existing saved game data. then create the board.
 		}
 
+		// TODO: should these be named as event handlers? OnXxxx(..) ?
+		public void PauseGame()
+		{
+			Debug.Log("Pause Current Game ...");
+
+			// TODO: Show table of current player net worths? or just a pause menu.
+		}
+
+		// TODO: should these be named as event handlers? OnXxxx(..) ?
+		public void SaveGame()
+		{
+			Debug.Log("Save Current Game ...");
+
+			// TODO: Save current game data.
+		}
+
+		// TODO: should these be named as event handlers? OnXxxx(..) ?
 		public void EndGame()
 		{
 			Debug.Log("End Existing Game ...");
 
-			// TODO: Show player scores so winner(s) can be decided.
+			// TODO: Show player total net worths so winner(s) can be decided.
 			// Calculate all player net worths (values at current price) and show in a table view thing.
+		}
+
+		private void UpdateCurrentPlayer()
+		{
+			if (m_Game != null) {
+			}
+
+			if (m_Game.Players.Count > 0) {
+				m_PlayerService.SetPlayer(m_Game.Players[m_Game.CurrentPlayerIndex]);
+			} else {
+				m_PlayerService.ClearPlayer();
+			}
 		}
 
 		private void CleanupCurrentGame()
@@ -118,6 +165,7 @@ namespace App
 		}
 		*/
 
+		// TODO: This is legacy gui style. Need to learn modern GUI.
 		//public void OnGui()
 		//{
 		//	Debug.Log("OnGui...");

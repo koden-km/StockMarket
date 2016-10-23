@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace App
 {
 
-	public class BoardTile
+	public class BoardTileModel
 	{
 		public TileType Tile;
 
@@ -29,21 +29,21 @@ namespace App
 		/// The previous board tile.
 		/// Use for general movement around the board, not move option logic.
 		/// </summary>
-		public BoardTile Previous;
+		public BoardTileModel Previous;
 
 		/// <summary>
 		/// The next board tile.
 		/// Use for general movement around the board, not move option logic.
 		/// </summary>
-		public BoardTile Next;
+		public BoardTileModel Next;
 
 		/// <summary>
 		/// The shareholder meeting board tile.
 		/// Use for general movement around the board, not move option logic.
 		/// </summary>
-		public BoardTile ShareMeeting;
+		public BoardTileModel ShareMeeting;
 
-		private BoardTile(TileType tile, BoardTileMoveFlags moveFlags)
+		private BoardTileModel(TileType tile, BoardTileMoveFlags moveFlags)
 		{
 			Tile = tile;
 			MoveFlags = moveFlags;
@@ -55,13 +55,13 @@ namespace App
 			ShareMeeting = null;
 		}
 
-		public static BoardTile CreateJob(
+		public static BoardTileModel CreateJob(
 			TileType tile,
 			JobType job,
 			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Job);
+			BoardTileModel bt = new BoardTileModel(tile, BoardTileMoveFlags.Job);
 			bt.Color = Color.white;
 			bt.SetupTitleJob(game, job);
 			bt.Job = job;
@@ -70,7 +70,7 @@ namespace App
 			return bt;
 		}
 
-		public static BoardTile CreateCompany(
+		public static BoardTileModel CreateCompany(
 			TileType tile,
 			BoardTileMoveFlags moveFlags,
 			CompanyType company,
@@ -78,7 +78,7 @@ namespace App
 			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, moveFlags);
+			BoardTileModel bt = new BoardTileModel(tile, moveFlags);
 			bt.Color = game.Companies[company].Color;
 			bt.SetupTitleTrade(game, company, tile);
 			bt.Job = null;
@@ -87,32 +87,32 @@ namespace App
 			return bt;
 		}
 
-		public static BoardTile CreateCompanyMeeting(
+		public static BoardTileModel CreateCompanyMeeting(
 			TileType tile,
 			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Left | BoardTileMoveFlags.Right);
+			BoardTileModel bt = new BoardTileModel(tile, BoardTileMoveFlags.Left | BoardTileMoveFlags.Right);
 			// TODO
 			return bt;
 		}
 
-		public static BoardTile CreateStart(
+		public static BoardTileModel CreateStart(
 			TileType tile,
 			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Left | BoardTileMoveFlags.Right);
+			BoardTileModel bt = new BoardTileModel(tile, BoardTileMoveFlags.Left | BoardTileMoveFlags.Right);
 			// TODO
 			return bt;
 		}
 
-		public static BoardTile CreateBrokerFee(
+		public static BoardTileModel CreateBrokerFee(
 			TileType tile,
 			GameModel game
 		)
 		{
-			BoardTile bt = new BoardTile(tile, BoardTileMoveFlags.Right);
+			BoardTileModel bt = new BoardTileModel(tile, BoardTileMoveFlags.Right);
 			// TODO
 			return bt;
 		}
