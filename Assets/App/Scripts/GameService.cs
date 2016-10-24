@@ -4,9 +4,18 @@ namespace App
 {
 
 	/// <summary>
+	/// Interface for game logic operations.
+	/// </summary>
+	public interface IGameService
+	{
+		// TODO: put methods from main class into here and move to own file.
+	}
+
+
+	/// <summary>
 	/// Game logic operations.
 	/// </summary>
-	public class GameService
+	public class GameService : IGameService
 	{
 		/// <summary>
 		/// The game to operate on.

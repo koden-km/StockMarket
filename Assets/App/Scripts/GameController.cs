@@ -115,15 +115,16 @@ namespace App
 			// Calculate all player net worths (values at current price) and show in a table view thing.
 		}
 
+		// TODO: not sure if this is needed now...
 		private void UpdateCurrentPlayer()
 		{
 			if (m_Game != null) {
 			}
 
 			if (m_Game.Players.Count > 0) {
-				m_PlayerService.SetPlayer(m_Game.Players[m_Game.CurrentPlayerIndex]);
+				//m_PlayerService.SetPlayer(m_Game.Players[m_Game.CurrentPlayerIndex]);
 			} else {
-				m_PlayerService.ClearPlayer();
+				//m_PlayerService.ClearPlayer();
 			}
 		}
 

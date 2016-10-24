@@ -11,8 +11,10 @@ namespace App
 
 	public class PlayerController
 	{
+		//private PlayerService m_PlayerService;
 
-		public bool DoTurn(PlayerService playerService)
+		//public bool DoTurn(PlayerService playerService)
+		public bool DoTurn()
 		{
 			// TODO
 			// Check job type

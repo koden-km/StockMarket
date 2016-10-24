@@ -4,8 +4,36 @@ using System.Collections.Generic;
 namespace App
 {
 
-	public class PlayerModel
+
+	// TODO: should the events be very specific? eg. cash changed vs just something on the model changed?
+
+	// Dispatched when the player model changes.
+	public class PlayerModelChangedEventArgs : System.EventArgs
 	{
+		// TODO: some detail of the change? maybe the whole model?
+	}
+
+
+
+	// TODO: change these to get/set properties and send events for changes?
+
+
+	public interface IPlayerModel
+	{
+		event System.EventHandler<PlayerModelChangedEventArgs> OnModelChanged;
+
+		// TODO: add getter/setter properties.
+	}
+
+
+
+	public class PlayerModel : IPlayerModel
+	{
+
+		public event System.EventHandler<PlayerModelChangedEventArgs> OnModelChanged = (sender, eventArgs) => {};
+
+
+
 		/// <summary>
 		/// The name of the player.
 		/// </summary>
@@ -35,7 +63,7 @@ namespace App
 		/// The shares this player currently has.
 		/// A map of company type to share count.
 		/// </summary>
-		public Dictionary<CompanyType, int> Shares;
+		public Dictionary<CompanyType,int> Shares;
 
 		/// <summary>
 		/// The share holder meeting currently attending, or null if not currently attending.
@@ -53,7 +81,7 @@ namespace App
 			Cash = 0;
 			BoardTileIndex = 0;
 			Job = JobType.Worker100;
-			Shares = new Dictionary<CompanyType, int>();
+			Shares = new Dictionary<CompanyType,int>();
 			ShareHolderMeeting = null;
 		}
 
