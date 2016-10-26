@@ -3,12 +3,13 @@ using System.Collections;
 
 namespace App
 {
+	// Note: Services were not in the example. The event handlers and/or controllers did the logic.
+	// Services should contain the business logic to prevent fat controllers/models.
 
-	// TODO: services were not in the example. they should contain the business logic to prevent fat controllers/models.
 
-
-	public class ServiceManager : MonoBehaviour
+	public class ServiceContainer : GameElement
 	{
+		//public IPlayerService Player;
 
 		void Start()
 		{

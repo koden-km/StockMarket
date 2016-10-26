@@ -2,6 +2,8 @@
 
 namespace App
 {
+	// Note: Based on examples here https://www.toptal.com/unity-unity3d/unity-with-mvc-how-to-level-up-your-game-development
+
 
 	/// <summary>
 	/// Base class for all elements in this application.

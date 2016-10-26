@@ -105,9 +105,7 @@ namespace App
 		/// <param name="company">The company to get shares for.</param>
 		public int CurrentShares(PlayerModel player, CompanyType company)
 		{
-			int shares = 0;
-			player.Shares.TryGetValue(company, out shares);
-			return shares;
+			return player.GetShares(company);
 		}
 
 		/// <summary>
@@ -117,6 +115,8 @@ namespace App
 		/// <param name="player">The player.</param>
 		public Dictionary<CompanyType,int> AllCompanyShares(PlayerModel player)
 		{
+			// TODO: Refactor to use getter/setter/methods. Mutators should not use Shares directly?
+
 			return player.Shares;
 		}
 
@@ -151,7 +151,7 @@ namespace App
 		/// <param name="shares">The number of shares to set.</param>
 		public void SetShares(PlayerModel player, CompanyType company, int shares)
 		{
-			player.Shares[company] = shares;
+			player.SetShares(company, shares);
 		}
 
 		/// <summary>
@@ -162,6 +162,8 @@ namespace App
 		/// <param name="shares">The number of shares to add.</param>
 		public void AddShares(PlayerModel player, CompanyType company, int shares)
 		{
+			// TODO: Refactor to use getter/setter/methods. Mutators should not use Shares directly?
+
 			if (player.Shares.ContainsKey(company)) {
 				player.Shares[company] += shares;
 			} else {
@@ -178,6 +180,8 @@ namespace App
 		/// <param name="shares">The number of shares to subtract.</param>
 		public void SubtractShares(PlayerModel player, CompanyType company, int shares)
 		{
+			// TODO: Refactor to use getter/setter/methods. Mutators should not use Shares directly?
+
 			if (player.Shares.ContainsKey(company)) {
 				player.Shares[company] -= shares;
 			}
@@ -347,7 +351,7 @@ namespace App
 		/// <param name="player">The player.</param>
 		public void GoBackToWork(PlayerModel player)
 		{
-			player.ResetToDefault();
+			player.ResetValues();
 		}
 
 		#endregion

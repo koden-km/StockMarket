@@ -3,10 +3,12 @@ using System.Collections;
 
 namespace App
 {
+	// Note: Based on examples here https://www.toptal.com/unity-unity3d/unity-with-mvc-how-to-level-up-your-game-development
 
-	public class ViewContainer : MonoBehaviour
+
+	public class ViewContainer : GameElement
 	{
-		public GameView Game;
+		//public GameView Game;
 
 		void Start()
 		{
