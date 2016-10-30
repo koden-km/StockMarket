@@ -37,12 +37,6 @@ namespace App
 		int Cash { get; set; }
 
 		/// <summary>
-		/// The shares this player currently has.
-		/// A map of company type to share count.
-		/// </summary>
-		Dictionary<CompanyType,int> Shares { get; }
-
-		/// <summary>
 		/// Gets the shares this player has for the given company.
 		/// </summary>
 		/// <returns>The shares owned for the given company.</returns>
@@ -55,6 +49,25 @@ namespace App
 		/// <param name="company">Company.</param>
 		/// <param name="shares">Shares.</param>
 		void SetShares(CompanyType company, int shares);
+
+		/// <summary>
+		/// Adds shares to this player for the given company.
+		/// </summary>
+		/// <param name="company">The company to add shares for.</param>
+		/// <param name="shares">The number of shares to add.</param>
+		void AddShares(CompanyType company, int shares);
+
+		/// <summary>
+		/// Subtract shares from this player for the given company.
+		/// </summary>
+		/// <param name="company">The company to subtract shares for.</param>
+		/// <param name="shares">The number of shares to subtract.</param>
+		void SubtractShares(CompanyType company, int shares);
+
+		/// <summary>
+		/// Clears all shares for this player.
+		/// </summary>
+		void ClearAllShares();
 
 		/// <summary>
 		/// The company share holder meeting this player is currently attending, or null if not currently attending.
@@ -186,18 +199,6 @@ namespace App
 		//		void OnColorChanged(PlayerModelChangedEventArgs eventArgs);
 		//
 		//		/// <summary>
-		//		/// Raises the cash changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnCashChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the cash changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnCashChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
 		//		/// Raises the board tile index changing event.
 		//		/// </summary>
 		//		/// <param name="eventArgs">Event arguments.</param>
@@ -220,6 +221,18 @@ namespace App
 		//		/// </summary>
 		//		/// <param name="eventArgs">Event arguments.</param>
 		//		void OnJobChanged(PlayerModelChangedEventArgs eventArgs);
+		//
+		//		/// <summary>
+		//		/// Raises the cash changing event.
+		//		/// </summary>
+		//		/// <param name="eventArgs">Event arguments.</param>
+		//		void OnCashChanging(PlayerModelChangingEventArgs eventArgs);
+		//
+		//		/// <summary>
+		//		/// Raises the cash changed event.
+		//		/// </summary>
+		//		/// <param name="eventArgs">Event arguments.</param>
+		//		void OnCashChanged(PlayerModelChangedEventArgs eventArgs);
 		//
 		//		/// <summary>
 		//		/// Raises the shares changing event.

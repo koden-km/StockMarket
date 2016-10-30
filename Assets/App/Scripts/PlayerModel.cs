@@ -9,8 +9,7 @@ namespace App
 	/// </summary>
 	public class PlayerModel : IPlayerModel
 	{
-
-		#region Constructors
+		#region Constructor
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="App.PlayerModel"/> class.
@@ -21,20 +20,12 @@ namespace App
 				name,
 				UnityEngine.Color.white,
 				0,
-				0,
 				JobType.Worker100,
+				0,
 				new Dictionary<CompanyType,int>(),
 				null
 			)
 		{
-			//m_Shares[CompanyType.AlphaA] = 0;
-			//m_Shares[CompanyType.AlphaB] = 0;
-			//m_Shares[CompanyType.AlphaC] = 0;
-			//m_Shares[CompanyType.AlphaD] = 0;
-			//m_Shares[CompanyType.OmegaA] = 0;
-			//m_Shares[CompanyType.OmegaB] = 0;
-			//m_Shares[CompanyType.OmegaC] = 0;
-			//m_Shares[CompanyType.OmegaD] = 0;
 		}
 
 		/// <summary>
@@ -43,65 +34,33 @@ namespace App
 		/// </summary>
 		/// <param name="name">Name of player.</param>
 		/// <param name="color">Color of player token.</param>
-		/// <param name="cash">Cash.</param>
 		/// <param name="boardTileIndex">Board tile index.</param>
 		/// <param name="job">Job.</param>
+		/// <param name="cash">Cash.</param>
 		/// <param name="shares">Company shares.</param>
 		/// <param name="shareholderMeeting">Company share holder meeting currently attending, or null if not currently attending.</param>
 		public PlayerModel(
 			string name,
 			UnityEngine.Color color,
-			int cash,
 			int boardTileIndex,
 			JobType job,
+			int cash,
 			Dictionary<CompanyType,int> shares,
 			CompanyType? shareholderMeeting
 		)
 		{
 			Name = name;
 			Color = color;
-			Cash = cash;
 			BoardTileIndex = boardTileIndex;
 			Job = job;
-			Shares = shares;
+			Cash = cash;
+			SetShares(shares);
 			ShareHolderMeeting = ShareHolderMeeting;
 		}
 
-		#endregion // Constructors
+		#endregion // Constructor
 
-		#region Helpers
-
-		/// <summary>
-		/// Resets to default values.
-		/// Can be used when bankrupt and/or going back to work.
-		/// </summary>
-		public void ResetValues()
-		{
-			//OnModelChanging(new PlayerModelChangedEventArgs(""));
-
-			Cash = 0;
-			BoardTileIndex = 0;
-			Job = JobType.Worker100;
-			ShareHolderMeeting = null;
-
-			// Set and send event manually to prevent resending the event every time.
-			OnSharesChanging(new PlayerModelChangingEventArgs("Shares"));
-			m_Shares[CompanyType.AlphaA] = 0;
-			m_Shares[CompanyType.AlphaB] = 0;
-			m_Shares[CompanyType.AlphaC] = 0;
-			m_Shares[CompanyType.AlphaD] = 0;
-			m_Shares[CompanyType.OmegaA] = 0;
-			m_Shares[CompanyType.OmegaB] = 0;
-			m_Shares[CompanyType.OmegaC] = 0;
-			m_Shares[CompanyType.OmegaD] = 0;
-			OnSharesChanged(new PlayerModelChangedEventArgs("Shares"));
-
-			//OnModelChanged(new PlayerModelChangedEventArgs(""));
-		}
-
-		#endregion // Helpers
-
-		#region Properties
+		#region Properties/Methods
 
 		/// <summary>
 		/// The name of the player.
@@ -128,20 +87,6 @@ namespace App
 					OnColorChanging(new PlayerModelChangingEventArgs("Color"));
 					m_Color = value;
 					OnColorChanged(new PlayerModelChangedEventArgs("Color"));
-				}
-			}
-		}
-
-		/// <summary>
-		/// The amount of cash this player currently has.
-		/// </summary>
-		public int Cash {
-			get { return m_Cash; }
-			set {
-				if (m_Cash != value) {
-					OnCashChanging(new PlayerModelChangingEventArgs("Cash"));
-					m_Cash = value;
-					OnCashChanged(new PlayerModelChangedEventArgs("Cash"));
 				}
 			}
 		}
@@ -175,20 +120,15 @@ namespace App
 		}
 
 		/// <summary>
-		/// The shares this player currently has.
-		/// A map of company type to share count.
+		/// The amount of cash this player currently has.
 		/// </summary>
-		public Dictionary<CompanyType,int> Shares {
-
-			// TODO: Try refactor this out. Maybe just have a bunch of Int fields for the shares of each type?
-			//get { return m_Shares; }
-			get { return new Dictionary<CompanyType,int>(m_Shares); }
-
-			protected set {
-				if (m_Shares != value) {
-					OnSharesChanging(new PlayerModelChangingEventArgs("Shares"));
-					m_Shares = value;
-					OnSharesChanged(new PlayerModelChangedEventArgs("Shares"));
+		public int Cash {
+			get { return m_Cash; }
+			set {
+				if (m_Cash != value) {
+					OnCashChanging(new PlayerModelChangingEventArgs("Cash"));
+					m_Cash = value;
+					OnCashChanged(new PlayerModelChangedEventArgs("Cash"));
 				}
 			}
 		}
@@ -208,8 +148,8 @@ namespace App
 		/// <summary>
 		/// Sets the shares this player has for the given company.
 		/// </summary>
-		/// <param name="company">Company.</param>
-		/// <param name="shares">Shares.</param>
+		/// <param name="company">The company to set shares for.</param>
+		/// <param name="shares">The number of shares to set.</param>
 		public void SetShares(CompanyType company, int shares)
 		{
 			int currentShares = m_Shares[company];
@@ -218,6 +158,49 @@ namespace App
 				m_Shares[company] = shares;
 				OnSharesChanged(new PlayerModelChangedEventArgs("Shares"));
 			}
+		}
+
+		/// <summary>
+		/// Sets all the shares this player has.
+		/// </summary>
+		/// <param name="shares">The new shares object.</param>
+		protected void SetShares(Dictionary<CompanyType,int> shares)
+		{
+			if (m_Shares != shares) {
+				OnSharesChanging(new PlayerModelChangingEventArgs("Shares"));
+				m_Shares = shares;
+				OnSharesChanged(new PlayerModelChangedEventArgs("Shares"));
+			}
+		}
+
+		/// <summary>
+		/// Adds shares to this player for the given company.
+		/// </summary>
+		/// <param name="company">The company to add shares for.</param>
+		/// <param name="shares">The number of shares to add.</param>
+		public void AddShares(CompanyType company, int shares)
+		{
+			SetShares(company, GetShares(company) + shares);
+		}
+
+		/// <summary>
+		/// Subtract shares from this player for the given company.
+		/// </summary>
+		/// <param name="company">The company to subtract shares for.</param>
+		/// <param name="shares">The number of shares to subtract.</param>
+		public void SubtractShares(CompanyType company, int shares)
+		{
+			SetShares(company, GetShares(company) - shares);
+		}
+
+		/// <summary>
+		/// Clears all shares for this player.
+		/// </summary>
+		public void ClearAllShares()
+		{
+			OnSharesChanging(new PlayerModelChangingEventArgs("Shares"));
+			m_Shares.Clear();
+			OnSharesChanged(new PlayerModelChangedEventArgs("Shares"));
 		}
 
 		/// <summary>
@@ -234,10 +217,12 @@ namespace App
 			}
 		}
 
-		#endregion // Properties
+		#endregion // Properties/Methods
 
 		#region Event Handlers
 
+		// TODO: these might be good for a simplier way alert of changes as a whole?
+		//
 		//		/// <summary>
 		//		/// Occurs when model is about to change.
 		//		/// </summary>
@@ -322,6 +307,8 @@ namespace App
 
 		#region Event Triggers
 
+		// TODO: these might be good for a simplier way alert of changes as a whole?
+		//
 		//		/// <summary>
 		//		/// Raises the model changing event.
 		//		/// </summary>
@@ -377,24 +364,6 @@ namespace App
 		}
 
 		/// <summary>
-		/// Raises the cash changing event.
-		/// </summary>
-		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void OnCashChanging(PlayerModelChangingEventArgs eventArgs)
-		{
-			CashChanging(this, eventArgs);
-		}
-
-		/// <summary>
-		/// Raises the cash changed event.
-		/// </summary>
-		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void OnCashChanged(PlayerModelChangedEventArgs eventArgs)
-		{
-			CashChanged(this, eventArgs);
-		}
-
-		/// <summary>
 		/// Raises the board tile index changing event.
 		/// </summary>
 		/// <param name="eventArgs">Event arguments.</param>
@@ -428,6 +397,24 @@ namespace App
 		protected virtual void OnJobChanged(PlayerModelChangedEventArgs eventArgs)
 		{
 			JobChanged(this, eventArgs);
+		}
+
+		/// <summary>
+		/// Raises the cash changing event.
+		/// </summary>
+		/// <param name="eventArgs">Event arguments.</param>
+		protected virtual void OnCashChanging(PlayerModelChangingEventArgs eventArgs)
+		{
+			CashChanging(this, eventArgs);
+		}
+
+		/// <summary>
+		/// Raises the cash changed event.
+		/// </summary>
+		/// <param name="eventArgs">Event arguments.</param>
+		protected virtual void OnCashChanged(PlayerModelChangedEventArgs eventArgs)
+		{
+			CashChanged(this, eventArgs);
 		}
 
 		/// <summary>
@@ -468,7 +455,7 @@ namespace App
 
 		#endregion // Event Triggers
 
-		#region Data
+		#region Model Data
 
 		/// <summary>
 		/// The name of the player.
@@ -481,11 +468,6 @@ namespace App
 		private UnityEngine.Color m_Color;
 
 		/// <summary>
-		/// The amount of cash this player currently has.
-		/// </summary>
-		private int m_Cash;
-
-		/// <summary>
 		/// The index of the board tile the player is currently at.
 		/// </summary>
 		private int m_BoardTileIndex;
@@ -494,6 +476,11 @@ namespace App
 		/// The job type this player is currently doing.
 		/// </summary>
 		private JobType m_Job;
+
+		/// <summary>
+		/// The amount of cash this player currently has.
+		/// </summary>
+		private int m_Cash;
 
 		/// <summary>
 		/// The shares this player currently has.
@@ -506,7 +493,7 @@ namespace App
 		/// </summary>
 		private CompanyType? m_ShareHolderMeeting;
 
-		#endregion // Data
+		#endregion // Model Data
 	}
 
 }
