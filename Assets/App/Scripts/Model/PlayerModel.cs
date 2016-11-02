@@ -1,7 +1,6 @@
-﻿//using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace App
+namespace App.Model
 {
 
 	/// <summary>
@@ -9,10 +8,11 @@ namespace App
 	/// </summary>
 	public class PlayerModel : IPlayerModel
 	{
-		#region Constructor
+		#region Constructor(s)
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="App.PlayerModel"/> class.
+		/// Initializes a new instance of the <see cref="App.Model.PlayerModel"/> class.
+		/// This is a convenience constructor.
 		/// </summary>
 		/// <param name="name">Name.</param>
 		public PlayerModel(string name)
@@ -29,7 +29,7 @@ namespace App
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="App.PlayerModel"/> class.
+		/// Initializes a new instance of the <see cref="App.Model.PlayerModel"/> class.
 		/// This is the designated constructor.
 		/// </summary>
 		/// <param name="name">Name of player.</param>
@@ -58,7 +58,7 @@ namespace App
 			ShareHolderMeeting = ShareHolderMeeting;
 		}
 
-		#endregion // Constructor
+		#endregion // Constructor(s)
 
 		#region Properties/Methods
 
@@ -152,7 +152,7 @@ namespace App
 		/// <param name="shares">The number of shares to set.</param>
 		public void SetShares(CompanyType company, int shares)
 		{
-			int currentShares = m_Shares[company];
+			int currentShares = GetShares(company);
 			if (shares != currentShares) {
 				OnSharesChanging(new PlayerModelChangingEventArgs("Shares"));
 				m_Shares[company] = shares;

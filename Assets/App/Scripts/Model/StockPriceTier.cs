@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace App
+﻿namespace App.Model
 {
 
 	/// <summary>
@@ -8,16 +6,20 @@ namespace App
 	/// </summary>
 	public class StockPriceTier
 	{
-		private int[] m_Prices;
+		#region Constructor(s)
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="App.StockPriceTier"/> class.
+		/// Initializes a new instance of the <see cref="App.Model.StockPriceTier"/> class.
 		/// </summary>
 		/// <param name="prices">The prices for stock on this tier.</param>
 		public StockPriceTier(int[] prices)
 		{
 			m_Prices = prices;
 		}
+
+		#endregion // Constructor(s)
+
+		#region Properties/Methods
 
 		/// <summary>
 		/// Get the stock price the specified company.
@@ -28,6 +30,16 @@ namespace App
 			return m_Prices[(int)company];
 		}
 
+		#endregion // Properties/Methods
+
+		#region Model Data
+
+		/// <summary>
+		/// The stock prices for this tier.
+		/// </summary>
+		private int[] m_Prices;
+
+		#endregion // Model Data
 	}
 
 }

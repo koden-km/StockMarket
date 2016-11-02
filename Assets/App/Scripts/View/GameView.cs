@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using App.Controller;
 
-namespace App
+namespace App.View
 {
 
 	[RequireComponent(typeof(Canvas))]

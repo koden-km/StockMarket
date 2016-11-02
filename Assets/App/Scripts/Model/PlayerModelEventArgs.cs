@@ -1,4 +1,4 @@
-﻿namespace App
+﻿namespace App.Model
 {
 
 	/// <summary>
@@ -13,7 +13,7 @@
 		public readonly string FieldName;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="App.PlayerModelChangingEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="App.Model.PlayerModelChangingEventArgs"/> class.
 		/// </summary>
 		/// <param name="fieldName">The field name that is changing.</param>
 		public PlayerModelChangingEventArgs(string fieldName)
@@ -35,7 +35,7 @@
 		public readonly string FieldName;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="App.PlayerModelChangedEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="App.Model.PlayerModelChangedEventArgs"/> class.
 		/// </summary>
 		/// <param name="fieldName">The field name that has changed.</param>
 		public PlayerModelChangedEventArgs(string fieldName)

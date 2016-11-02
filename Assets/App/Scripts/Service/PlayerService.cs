@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
+using App.Model;
 
-namespace App
+namespace App.Service
 {
 	
-	/// <summary>
-	/// Interface for player logic operations.
-	/// </summary>
-	public interface IPlayerService
-	{
-		// TODO: put methods from main class into here and move to own file.
-	}
-
-
 	/// <summary>
 	/// Player game logic operations.
 	/// </summary>
 	public class PlayerService : IPlayerService
 	{
+		#region Constructor(s)
+
 		/// <summary>
-		/// Initializes a new instance of the <see cref="App.PlayerService"/> class.
+		/// Initializes a new instance of the <see cref="App.Service.PlayerService"/> class.
+		/// This is the designated constructor.
 		/// </summary>
 		public PlayerService()
 		{
 		}
+
+		#endregion // Constructor(s)
 
 		#region Player Game Logic
 
@@ -47,7 +44,7 @@ namespace App
 		/// <param name="player">The player.</param>
 		/// <param name="stockPrice">The stock price tier.</param>
 		/// <param name="company">The company to calculate share value for.</param>
-		public int CalculateCurrentShareValue(PlayerModel player, StockPriceTier stockPrice, CompanyType company)
+		public int CalculateCurrentShareValue(IPlayerModel player, StockPriceTier stockPrice, CompanyType company)
 		{
 			return player.GetShares(company) * stockPrice.Price(company);
 		}
@@ -58,7 +55,7 @@ namespace App
 		/// <returns>The current total value.</returns>
 		/// <param name="player">The player.</param>
 		/// <param name="stockPrice">The stock price tier.</param>
-		public int CalculateCurrentTotalValue(PlayerModel player, StockPriceTier stockPrice)
+		public int CalculateCurrentTotalValue(IPlayerModel player, StockPriceTier stockPrice)
 		{
 			int totalValue = 0;
 			foreach (CompanyType company in System.Enum.GetValues(typeof(CompanyType))) {
@@ -73,7 +70,7 @@ namespace App
 		/// <returns>The player net worth.</returns>
 		/// <param name="player">The player.</param>
 		/// <param name="stockPrice">The stock price tier to use for calculation.</param>
-		public int CalculateNetWorth(PlayerModel player, StockPriceTier stockPrice)
+		public int CalculateNetWorth(IPlayerModel player, StockPriceTier stockPrice)
 		{
 			return player.Cash + CalculateCurrentTotalValue(player, stockPrice);
 		}
@@ -86,7 +83,7 @@ namespace App
 		/// <param name="stockPrice">The stock price tier.</param>
 		/// <param name="company">The company to sell shares from.</param>
 		/// <param name="shares">The number of shares to buy.</param>
-		public int BuyShares(PlayerModel player, StockPriceTier stockPrice, CompanyType company, int shares)
+		public int BuyShares(IPlayerModel player, StockPriceTier stockPrice, CompanyType company, int shares)
 		{
 			int shareValue = CalculateShareValue(stockPrice, company, shares);
 			if (player.Cash < shareValue) {
@@ -105,7 +102,7 @@ namespace App
 		/// <param name="stockPrice">The stock price tier.</param>
 		/// <param name="company">The company to sell shares from.</param>
 		/// <param name="shares">The number of shares to sell.</param>
-		public int SellShares(PlayerModel player, StockPriceTier stockPrice, CompanyType company, int shares)
+		public int SellShares(IPlayerModel player, StockPriceTier stockPrice, CompanyType company, int shares)
 		{
 			if (player.GetShares(company) < shares) {
 				throw new System.Exception("Not enough owned shares to sell.");
@@ -121,7 +118,7 @@ namespace App
 		/// </summary>
 		/// <returns>The broker fee.</returns>
 		/// <param name="player">The player.</param>
-		public int CalculateBrokerFee(PlayerModel player)
+		public int CalculateBrokerFee(IPlayerModel player)
 		{
 			int totalShares = 0;
 			foreach (CompanyType company in System.Enum.GetValues(typeof(CompanyType))) {
@@ -136,7 +133,7 @@ namespace App
 		/// </summary>
 		/// <returns><c>true</c> if the player can afford broker fee; otherwise, <c>false</c>.</returns>
 		/// <param name="player">The player.</param>
-		public bool CanAffordBrokerFee(PlayerModel player)
+		public bool CanAffordBrokerFee(IPlayerModel player)
 		{
 			return player.Cash >= CalculateBrokerFee(player);
 		}
@@ -146,7 +143,7 @@ namespace App
 		/// </summary>
 		/// <returns>The amount of cash spent.</returns>
 		/// <param name="player">The player.</param>
-		public int PayBrokerFee(PlayerModel player)
+		public int PayBrokerFee(IPlayerModel player)
 		{
 			int fee = CalculateBrokerFee(player);
 			if (player.Cash < fee) {
@@ -161,7 +158,7 @@ namespace App
 		/// </summary>
 		/// <returns><c>true</c> if the player can afford $100 fee; otherwise, <c>false</c>.</returns>
 		/// <param name="player">The player.</param>
-		public bool CanAfford100Fee(PlayerModel player)
+		public bool CanAfford100Fee(IPlayerModel player)
 		{
 			const int fee = 100;
 			return player.Cash >= fee;
@@ -172,7 +169,7 @@ namespace App
 		/// </summary>
 		/// <returns>The amount of cash spent.</returns>
 		/// <param name="player">The player.</param>
-		public int Pay100Fee(PlayerModel player)
+		public int Pay100Fee(IPlayerModel player)
 		{
 			const int fee = 100;
 			if (player.Cash < fee) {
@@ -186,7 +183,7 @@ namespace App
 		/// Clear all player cash and shares then set them back at work.
 		/// </summary>
 		/// <param name="player">The player.</param>
-		public void GoBackToWork(PlayerModel player)
+		public void GoBackToWork(IPlayerModel player)
 		{
 			player.BoardTileIndex = 0;
 			player.Job = JobType.Worker100;

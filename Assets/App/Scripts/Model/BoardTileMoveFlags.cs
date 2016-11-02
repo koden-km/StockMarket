@@ -1,7 +1,9 @@
-﻿
-namespace App
+﻿namespace App.Model
 {
 
+	/// <summary>
+	/// Board tile move flags.
+	/// </summary>
 	[System.Flags]
 	public enum BoardTileMoveFlags
 	{

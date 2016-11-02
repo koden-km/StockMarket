@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using App.Model;
+using App.Service;
 
-namespace App
+namespace App.Controller
 {
 
 	// TODO: this should be a plain C# class (not MonoBehaviour) according to some Unity MVC tutorials.
@@ -12,11 +14,12 @@ namespace App
 		/// <summary>
 		/// The game model.
 		/// </summary>
-		private GameModel m_Game;
+		private IGameModel m_Game;
 
+		/// <summary>
+		/// The game service.
+		/// </summary>
 		private GameService m_GameService;
-
-		private PlayerService m_PlayerService;
 
 		// TODO: Not sure if needed and/or where to put this?
 		//public PlayerController m_PlayerController;
@@ -32,11 +35,9 @@ namespace App
 
 		void Start()
 		{
-			m_Game = new GameModel();
+			m_Game = GameModel.CreateNewGame();
 
-			m_GameService = new GameService(m_Game);
-
-			m_PlayerService = new PlayerService();
+			m_GameService = new GameService(new PlayerService());
 
 			//m_PlayerController = new PlayerController();
 
@@ -49,23 +50,19 @@ namespace App
 		void Update()
 		{
 			// TickGame();
+			m_GameService.TickGame(m_Game);
 		}
 
 		// TODO: should these be named as event handlers? OnCreatePlayer(..) ?
 		public void CreatePlayer(string name)
 		{
-			m_GameService.AddPlayer(name);
+			m_GameService.AddPlayer(m_Game, name);
 		}
 
 		// TODO: should these be named as event handlers? OnXxxx(..) ?
 		public void RemovePlayer(string name)
 		{
-			m_GameService.RemovePlayer(name);
-
-			// TODO: check this.
-			// If the current player leaves then this needs to switch to the next player.
-			// But make sure this doesn't continue/resume some player turn operation(s) on the newly switched player.
-			UpdateCurrentPlayer();
+			m_GameService.RemovePlayer(m_Game, name);
 		}
 
 		// TODO: should these be named as event handlers? OnXxxx(..) ?
@@ -115,19 +112,6 @@ namespace App
 			// Calculate all player net worths (values at current price) and show in a table view thing.
 		}
 
-		// TODO: not sure if this is needed now...
-		private void UpdateCurrentPlayer()
-		{
-			if (m_Game != null) {
-			}
-
-			if (m_Game.Players.Count > 0) {
-				//m_PlayerService.SetPlayer(m_Game.Players[m_Game.CurrentPlayerIndex]);
-			} else {
-				//m_PlayerService.ClearPlayer();
-			}
-		}
-
 		private void CleanupCurrentGame()
 		{
 			Debug.Log("Cleanup Current Game ...");
@@ -146,25 +130,34 @@ namespace App
 		}
 
 		// TODO: do this as an enumerator?
-		/*
-		private void TickGame()
-		{
-			if (Players.Count == 0) {
-				return;
-			}
-
-			int roll = Players[ActivePlayer].DoTurn();
-			if (roll > 0) {
-				// TODO: Need to give money to Worker players if the roll was for them.
-				// A roll of zero could mean they didn't roll anything, and/or are still having their turn? (enumerator?)
-				
-				ActivePlayer++;
-				if (ActivePlayer > Players.Count) {
-					ActivePlayer = 0;
-				}
-			}
-		}
-		*/
+		//		private void TickGame()
+		//		{
+		//			if (m_Game.Players.Count == 0) {
+		//				return;
+		//			}
+		//
+		//			int roll = 0; // TODO: m_Game.CurrentPlayer().DoTurn();
+		//			if (roll > 0) {
+		//				// TODO: Need to give money to Worker players if the roll was for them.
+		//				// A roll of zero could mean they didn't roll anything, and/or are still having their turn? (enumerator?)
+		//
+		//				//JobType
+		//				System.Enum.GetValues(typeof(JobType));
+		//				foreach (JobType jobType in System.Enum.GetValues(typeof(JobType))) {
+		//					JobModel job = m_Game.GetJob(jobType);
+		//					if (roll == job.FirstPaysRoll) {
+		//						// TODO: pay players currently in this job.
+		//					} else if (roll == job.SecondPaysRoll) {
+		//						// TODO: pay players currently in this job.
+		//					}
+		//				}
+		//
+		//				m_Game.CurrentPlayerIndex++;
+		//				if (m_Game.CurrentPlayerIndex > m_Game.Players.Count) {
+		//					m_Game.CurrentPlayerIndex = 0;
+		//				}
+		//			}
+		//		}
 
 		// TODO: This is legacy gui style. Need to learn modern GUI.
 		//public void OnGui()

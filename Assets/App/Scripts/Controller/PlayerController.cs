@@ -1,7 +1,8 @@
 ﻿//using UnityEngine;
 using System.Collections.Generic;
+using App.Model;
 
-namespace App
+namespace App.Controller
 {
 
 	// TODO: I'm not sure if i need this class, controllers are for talking to views?

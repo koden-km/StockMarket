@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using App.Controller;
 
-namespace App
+namespace App.View
 {
 
 	public class BoardView : MonoBehaviour

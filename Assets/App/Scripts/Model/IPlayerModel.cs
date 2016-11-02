@@ -1,7 +1,4 @@
-﻿//using UnityEngine;
-using System.Collections.Generic;
-
-namespace App
+﻿namespace App.Model
 {
 
 	/// <summary>
@@ -159,106 +156,6 @@ namespace App
 		event System.EventHandler<PlayerModelChangedEventArgs> ShareHolderMeetingChanged;
 
 		#endregion // Event Handlers
-
-		//		#region Event Triggers
-		//
-		//		//		/// <summary>
-		//		//		/// Raises the model changing event.
-		//		//		/// </summary>
-		//		//		/// <param name="eventArgs">Event arguments.</param>
-		//		//		void OnModelChanging(PlayerModelChangingEventArgs eventArgs);
-		//		//
-		//		//		/// <summary>
-		//		//		/// Raises the model changed event.
-		//		//		/// </summary>
-		//		//		/// <param name="eventArgs">Event arguments.</param>
-		//		//		void OnModelChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the name changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnNameChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the name changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnNameChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the color changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnColorChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the color changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnColorChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the board tile index changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnBoardTileIndexChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the board tile index changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnBoardTileIndexChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the job changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnJobChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the job changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnJobChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the cash changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnCashChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the cash changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnCashChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the shares changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnSharesChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the shares changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnSharesChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the share holder meeting changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnShareHolderMeetingChanging(PlayerModelChangingEventArgs eventArgs);
-		//
-		//		/// <summary>
-		//		/// Raises the share holder meeting changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		void OnShareHolderMeetingChanged(PlayerModelChangedEventArgs eventArgs);
-		//
-		//		#endregion // Event Triggers
 	}
 
 }
