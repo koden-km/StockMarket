@@ -19,8 +19,8 @@ namespace StockMarket.Models
 			: this(
 				name,
 				UnityEngine.Color.white,
-				0,
 				JobType.Worker100,
+				0,
 				0,
 				new Dictionary<CompanyType,int>(),
 				null
@@ -34,28 +34,28 @@ namespace StockMarket.Models
 		/// </summary>
 		/// <param name="name">Name of player.</param>
 		/// <param name="color">Color of player token.</param>
-		/// <param name="boardTileIndex">Board tile index.</param>
 		/// <param name="job">Job.</param>
+		/// <param name="boardTileIndex">Board tile index.</param>
 		/// <param name="cash">Cash.</param>
 		/// <param name="shares">Company shares.</param>
-		/// <param name="shareholderMeeting">Company share holder meeting currently attending, or null if not currently attending.</param>
+		/// <param name="shareHolderMeeting">Company share holder meeting currently attending, or null if not currently attending.</param>
 		public PlayerModel(
 			string name,
 			UnityEngine.Color color,
-			int boardTileIndex,
 			JobType job,
+			int boardTileIndex,
 			int cash,
 			Dictionary<CompanyType,int> shares,
-			CompanyType? shareholderMeeting
+			CompanyType? shareHolderMeeting
 		)
 		{
 			Name = name;
 			Color = color;
-			BoardTileIndex = boardTileIndex;
 			Job = job;
+			BoardTileIndex = boardTileIndex;
 			Cash = cash;
 			SetShares(shares);
-			ShareHolderMeeting = ShareHolderMeeting;
+			ShareHolderMeeting = shareHolderMeeting;
 		}
 
 		#endregion // Constructor(s)
@@ -92,20 +92,6 @@ namespace StockMarket.Models
 		}
 
 		/// <summary>
-		/// The index of the board tile the player is currently at.
-		/// </summary>
-		public int BoardTileIndex {
-			get { return m_BoardTileIndex; }
-			set {
-				if (m_BoardTileIndex != value) {
-					OnBoardTileIndexChanging(new PlayerModelChangingEventArgs("BoardTileIndex"));
-					m_BoardTileIndex = value;
-					OnBoardTileIndexChanged(new PlayerModelChangedEventArgs("BoardTileIndex"));
-				}
-			}
-		}
-
-		/// <summary>
 		/// The job type this player is currently doing.
 		/// </summary>
 		public JobType Job {
@@ -115,6 +101,20 @@ namespace StockMarket.Models
 					OnJobChanging(new PlayerModelChangingEventArgs("Job"));
 					m_Job = value;
 					OnJobChanged(new PlayerModelChangedEventArgs("Job"));
+				}
+			}
+		}
+
+		/// <summary>
+		/// The index of the board tile the player is currently at.
+		/// </summary>
+		public int BoardTileIndex {
+			get { return m_BoardTileIndex; }
+			set {
+				if (m_BoardTileIndex != value) {
+					OnBoardTileIndexChanging(new PlayerModelChangingEventArgs("BoardTileIndex"));
+					m_BoardTileIndex = value;
+					OnBoardTileIndexChanged(new PlayerModelChangedEventArgs("BoardTileIndex"));
 				}
 			}
 		}
@@ -221,18 +221,6 @@ namespace StockMarket.Models
 
 		#region Event Handlers
 
-		// TODO: these might be good for a simplier way alert of changes as a whole?
-		//
-		//		/// <summary>
-		//		/// Occurs when model is about to change.
-		//		/// </summary>
-		//		public event System.EventHandler<PlayerModelChangingEventArgs> ModelChanging = (sender, e) => {};
-		//
-		//		/// <summary>
-		//		/// Occurs when model has changed.
-		//		/// </summary>
-		//		public event System.EventHandler<PlayerModelChangedEventArgs> ModelChanged = (sender, e) => {};
-
 		/// <summary>
 		/// Occurs when name is about to change.
 		/// </summary>
@@ -254,16 +242,6 @@ namespace StockMarket.Models
 		public event System.EventHandler<PlayerModelChangedEventArgs> ColorChanged = (sender, e) => {};
 
 		/// <summary>
-		/// Occurs when board index is about to change.
-		/// </summary>
-		public event System.EventHandler<PlayerModelChangingEventArgs> BoardTileIndexChanging = (sender, e) => {};
-
-		/// <summary>
-		/// Occurs when board index has changed.
-		/// </summary>
-		public event System.EventHandler<PlayerModelChangedEventArgs> BoardTileIndexChanged = (sender, e) => {};
-
-		/// <summary>
 		/// Occurs when job is about to change.
 		/// </summary>
 		public event System.EventHandler<PlayerModelChangingEventArgs> JobChanging = (sender, e) => {};
@@ -272,6 +250,16 @@ namespace StockMarket.Models
 		/// Occurs when job has changed.
 		/// </summary>
 		public event System.EventHandler<PlayerModelChangedEventArgs> JobChanged = (sender, e) => {};
+
+		/// <summary>
+		/// Occurs when board index is about to change.
+		/// </summary>
+		public event System.EventHandler<PlayerModelChangingEventArgs> BoardTileIndexChanging = (sender, e) => {};
+
+		/// <summary>
+		/// Occurs when board index has changed.
+		/// </summary>
+		public event System.EventHandler<PlayerModelChangedEventArgs> BoardTileIndexChanged = (sender, e) => {};
 
 		/// <summary>
 		/// Occurs when cash is about to change.
@@ -306,26 +294,6 @@ namespace StockMarket.Models
 		#endregion // Event Handlers
 
 		#region Event Triggers
-
-		// TODO: these might be good for a simplier way alert of changes as a whole?
-		//
-		//		/// <summary>
-		//		/// Raises the model changing event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		protected virtual void OnModelChanging(PlayerModelChangingEventArgs eventArgs)
-		//		{
-		//			ModelChanging(this, eventArgs);
-		//		}
-		//
-		//		/// <summary>
-		//		/// Raises the model changed event.
-		//		/// </summary>
-		//		/// <param name="eventArgs">Event arguments.</param>
-		//		protected virtual void OnModelChanged(PlayerModelChangedEventArgs eventArgs)
-		//		{
-		//			ModelChanged(this, eventArgs);
-		//		}
 
 		/// <summary>
 		/// Raises the name changing event.
@@ -364,24 +332,6 @@ namespace StockMarket.Models
 		}
 
 		/// <summary>
-		/// Raises the board tile index changing event.
-		/// </summary>
-		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void OnBoardTileIndexChanging(PlayerModelChangingEventArgs eventArgs)
-		{
-			BoardTileIndexChanging(this, eventArgs);
-		}
-
-		/// <summary>
-		/// Raises the board tile index changed event.
-		/// </summary>
-		/// <param name="eventArgs">Event arguments.</param>
-		protected virtual void OnBoardTileIndexChanged(PlayerModelChangedEventArgs eventArgs)
-		{
-			BoardTileIndexChanged(this, eventArgs);
-		}
-
-		/// <summary>
 		/// Raises the job changing event.
 		/// </summary>
 		/// <param name="eventArgs">Event arguments.</param>
@@ -397,6 +347,24 @@ namespace StockMarket.Models
 		protected virtual void OnJobChanged(PlayerModelChangedEventArgs eventArgs)
 		{
 			JobChanged(this, eventArgs);
+		}
+
+		/// <summary>
+		/// Raises the board tile index changing event.
+		/// </summary>
+		/// <param name="eventArgs">Event arguments.</param>
+		protected virtual void OnBoardTileIndexChanging(PlayerModelChangingEventArgs eventArgs)
+		{
+			BoardTileIndexChanging(this, eventArgs);
+		}
+
+		/// <summary>
+		/// Raises the board tile index changed event.
+		/// </summary>
+		/// <param name="eventArgs">Event arguments.</param>
+		protected virtual void OnBoardTileIndexChanged(PlayerModelChangedEventArgs eventArgs)
+		{
+			BoardTileIndexChanged(this, eventArgs);
 		}
 
 		/// <summary>
@@ -468,14 +436,14 @@ namespace StockMarket.Models
 		private UnityEngine.Color m_Color;
 
 		/// <summary>
-		/// The index of the board tile the player is currently at.
-		/// </summary>
-		private int m_BoardTileIndex;
-
-		/// <summary>
 		/// The job type this player is currently doing.
 		/// </summary>
 		private JobType m_Job;
+
+		/// <summary>
+		/// The index of the board tile the player is currently at.
+		/// </summary>
+		private int m_BoardTileIndex;
 
 		/// <summary>
 		/// The amount of cash this player currently has.

@@ -19,14 +19,14 @@
 		UnityEngine.Color Color { get; set; }
 
 		/// <summary>
-		/// The index of the board tile the player is currently at.
-		/// </summary>
-		int BoardTileIndex { get; set; }
-
-		/// <summary>
 		/// The job type this player is currently doing.
 		/// </summary>
 		JobType Job { get; set; }
+
+		/// <summary>
+		/// The index of the board tile the player is currently at.
+		/// </summary>
+		int BoardTileIndex { get; set; }
 
 		/// <summary>
 		/// The amount of cash this player currently has.
@@ -75,16 +75,6 @@
 
 		#region Event Handlers
 
-		//		/// <summary>
-		//		/// Occurs when model is about to change.
-		//		/// </summary>
-		//		event System.EventHandler<PlayerModelChangedEventArgs> ModelChanging = (sender, e) => {};
-		//
-		//		/// <summary>
-		//		/// Occurs when model has changed.
-		//		/// </summary>
-		//		event System.EventHandler<PlayerModelChangedEventArgs> ModelChanged = (sender, e) => {};
-
 		/// <summary>
 		/// Occurs when name is about to change.
 		/// </summary>
@@ -106,16 +96,6 @@
 		event System.EventHandler<PlayerModelChangedEventArgs> ColorChanged;
 
 		/// <summary>
-		/// Occurs when board index is about to change.
-		/// </summary>
-		event System.EventHandler<PlayerModelChangingEventArgs> BoardTileIndexChanging;
-
-		/// <summary>
-		/// Occurs when board index has changed.
-		/// </summary>
-		event System.EventHandler<PlayerModelChangedEventArgs> BoardTileIndexChanged;
-
-		/// <summary>
 		/// Occurs when job is about to change.
 		/// </summary>
 		event System.EventHandler<PlayerModelChangingEventArgs> JobChanging;
@@ -124,6 +104,16 @@
 		/// Occurs when job has changed.
 		/// </summary>
 		event System.EventHandler<PlayerModelChangedEventArgs> JobChanged;
+
+		/// <summary>
+		/// Occurs when board index is about to change.
+		/// </summary>
+		event System.EventHandler<PlayerModelChangingEventArgs> BoardTileIndexChanging;
+
+		/// <summary>
+		/// Occurs when board index has changed.
+		/// </summary>
+		event System.EventHandler<PlayerModelChangedEventArgs> BoardTileIndexChanged;
 
 		/// <summary>
 		/// Occurs when cash is about to change.
