@@ -37,7 +37,7 @@ namespace StockMarket.Services
 		/// <returns>The current total value.</returns>
 		/// <param name="player">The player.</param>
 		/// <param name="stockPrice">The stock price tier.</param>
-		int CalculateCurrentTotalValue(IPlayerModel player, StockPriceTier stockPrice);
+		int CalculateCurrentTotalShareValue(IPlayerModel player, StockPriceTier stockPrice);
 
 		/// <summary>
 		/// Calculates the player current net worth.
@@ -101,6 +101,15 @@ namespace StockMarket.Services
 		/// <returns>The amount of cash spent.</returns>
 		/// <param name="player">The player.</param>
 		int Pay100Fee(IPlayerModel player);
+
+		/// <summary>
+		/// Receives the dividend cash per share for the specified company.
+		/// </summary>
+		/// <returns>The dividend received.</returns>
+		/// <param name="player">The player.</param>
+		/// <param name="company">The company.</param>
+		/// <param name="dividendPerShare">The cash dividend per share.</param>
+		int ReceiveDividend(IPlayerModel player, CompanyType company, int dividendPerShare);
 
 		/// <summary>
 		/// Clear all player cash and shares then set them back at work.

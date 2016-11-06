@@ -35,6 +35,110 @@ namespace StockMarket.Services
 
 		#endregion // Services
 
+		#region Game Logic Operations
+
+		// TODO?
+		// player turns?
+		// dice rolling?
+
+		public void StartNewGame(IGameModel game)
+		{
+			// TODO
+		}
+
+		public void SaveGame(IGameModel game)
+		{
+			// TODO
+		}
+
+		public void LoadGame(IGameModel game)
+		{
+			// TODO
+		}
+
+		// TODO: do this as an enumerator?
+		public void TickGame(IGameModel game)
+		{
+			// TODO: check game state?
+
+			if (game.Players.Count == 0) {
+				return;
+			}
+
+			// TODO: do the player turn? CurrentPlayer(game).DoTurn(game);
+			// - ask to chose an option for turn:
+			//   + sell stock
+			//   + go back to work
+			//   + retire and exit (name and networth kept in game scores until end of game. they might win at end of time limit)
+			//   + roll dice and move
+			//
+			// - if chose to roll dice
+			//   + ask to chose a destination roll option if there are multiple paths
+
+			int roll = RollDice();
+			if (roll > 0) {
+				// TODO: Need to give money to Worker players if the roll was for them.
+				// A roll of zero could mean they didn't roll anything, and/or are still having their turn? (enumerator?)
+
+				//JobType
+				System.Enum.GetValues(typeof(JobType));
+				foreach (JobType jobType in System.Enum.GetValues(typeof(JobType))) {
+					JobModel job = game.GetJob(jobType);
+					if (roll == job.FirstPaysRoll) {
+						// TODO: pay players currently in this job.
+					} else if (roll == job.SecondPaysRoll) {
+						// TODO: pay players currently in this job.
+					}
+				}
+
+				// TODO: does ++ operator work with properties?
+				game.CurrentPlayerIndex++;
+				if (game.CurrentPlayerIndex > game.Players.Count) {
+					game.CurrentPlayerIndex = 0;
+				}
+			}
+		}
+
+		#endregion // Game Logic Operations
+
+		#region Game Board Operations
+
+		// TODO? use a BoardService for this?
+		// stock price things?
+		// player board movement?
+
+		/// <summary>
+		/// Get the current stock price.
+		/// </summary>
+		/// <returns>The current stock price.</returns>
+		/// <param name="game">The game.</param>
+		public StockPriceTier CurrentStockPrice(IGameModel game)
+		{
+			return game.Board.PriceTable[game.CurrentPriceIndex];
+		}
+
+		/// <summary>
+		/// Get the lowest stock price.
+		/// </summary>
+		/// <returns>The lowest stock price.</returns>
+		/// <param name="game">The game.</param>
+		public StockPriceTier LowestStockPrice(IGameModel game)
+		{
+			return game.Board.LowestPrice;
+		}
+
+		/// <summary>
+		/// Rolls the (2d6) dice.
+		/// </summary>
+		/// <returns>The dice roll result.</returns>
+		public int RollDice()
+		{
+			// 2d6 (2 to 12). Range() is Inclusive to Exclusive.
+			return UnityEngine.Random.Range(2, 13);
+		}
+
+		#endregion // Game Board Operations
+
 		#region Game Player Operations
 
 		/// <summary>
@@ -69,17 +173,47 @@ namespace StockMarket.Services
 		}
 
 		/// <summary>
-		/// Determines whether a player on this tile can sell at the current stock price.
+		/// The current the player who's turn it is.
+		/// </summary>
+		/// <returns>The player who's turn it is.</returns>
+		public IPlayerModel CurrentPlayer(IGameModel game)
+		{
+			return game.Players[game.CurrentPlayerIndex];
+		}
+
+		/// <summary>
+		/// Determines whether the current player has won the game.
+		/// To win, a player must have $100,000 (WinningNetWorthAmount) at his turn to roll the dice.
+		/// This includes his cash and all of his stock at the current board price.
+		/// </summary>
+		/// <returns><c>true</c> if the current player won the specified; otherwise, <c>false</c>.</returns>
+		/// <param name="game">Game.</param>
+		public bool HasPlayerWon(IGameModel game)
+		{
+			int netWorth = PlayerService.CalculateNetWorth(CurrentPlayer(game), CurrentStockPrice(game));
+			return netWorth >= game.WinningNetWorthAmount;
+		}
+
+		/// <summary>
+		/// The board tile of the current player.
+		/// </summary>
+		/// <returns>The board tile.</returns>
+		/// <param name="game">Game.</param>
+		public BoardTileModel CurrentBoardTile(IGameModel game)
+		{
+			int boardTileIndex = CurrentPlayer(game).BoardTileIndex;
+			return game.Board.BoardTiles[boardTileIndex];
+		}
+
+		/// <summary>
+		/// Determines whether the current player can sell at the current stock price on current tile.
 		/// If not, the player would only be able to sell at lowest possible price.
 		/// </summary>
 		/// <returns><c>true</c> if a player on this tile can sell at current price; otherwise, <c>false</c>.</returns>
 		/// <param name="game">The game.</param>
 		public bool CanSellAtCurrentPrice(IGameModel game)
 		{
-			int boardTileIndex = game.CurrentPlayer().BoardTileIndex;
-			BoardTileModel boardTile = game.Board.BoardTiles[boardTileIndex];
-
-			switch (boardTile.Tile) {
+			switch (CurrentBoardTile(game).Tile) {
 			case TileType.Start:
 			case TileType.BuyMany:
 			case TileType.BuyOne:
@@ -92,63 +226,28 @@ namespace StockMarket.Services
 			return false;
 		}
 
-		// TODO: do this as an enumerator?
-		public void TickGame(IGameModel game)
+		/// <summary>
+		/// Pays the dividend to the current player if on a company dividend paying tile.
+		/// </summary>
+		/// <param name="game">The game.</param>
+		public void PayDividend(IGameModel game)
 		{
-			if (game.Players.Count == 0) {
-				return;
-			}
-
-			int roll = 0; // TODO: m_Game.CurrentPlayer().DoTurn();
-			if (roll > 0) {
-				// TODO: Need to give money to Worker players if the roll was for them.
-				// A roll of zero could mean they didn't roll anything, and/or are still having their turn? (enumerator?)
-
-				//JobType
-				System.Enum.GetValues(typeof(JobType));
-				foreach (JobType jobType in System.Enum.GetValues(typeof(JobType))) {
-					JobModel job = game.GetJob(jobType);
-					if (roll == job.FirstPaysRoll) {
-						// TODO: pay players currently in this job.
-					} else if (roll == job.SecondPaysRoll) {
-						// TODO: pay players currently in this job.
-					}
-				}
-
-				game.CurrentPlayerIndex++;
-				if (game.CurrentPlayerIndex > game.Players.Count) {
-					game.CurrentPlayerIndex = 0;
-				}
+			BoardTileModel boardTile = CurrentBoardTile(game);
+			if (boardTile.Company.HasValue && boardTile.Dividend > 0) {
+				PlayerService.ReceiveDividend(CurrentPlayer(game), boardTile.Company.Value, boardTile.Dividend);
 			}
 		}
 
 		#endregion // Game Player Operations
 
-		#region Game Board Operations
-
-		// TODO? use a BoardService for this?
-		// stock price things?
-		// player board movement?
-
-		#endregion // Game Board Operations
-
-		#region Game Logic
-
-		// TODO?
-		// checking win condition?
-		// player turns?
-		// dice rolling?
-
-		#endregion // Game Logic
-
-		#region Service Helpers
+		#region Member(s)
 
 		/// <summary>
 		/// The player service.
 		/// </summary>
 		private IPlayerService m_PlayerService;
 
-		#endregion // Service Helpers
+		#endregion // Member(s)
 	}
 
 }

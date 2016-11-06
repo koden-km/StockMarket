@@ -67,17 +67,11 @@ namespace StockMarket.Models
 		/// <value>The players currently in the game.</value>
 		List<IPlayerModel> Players { get; }
 
-		/// <summary>
-		/// Add a player to the game.
-		/// </summary>
-		/// <param name="player">The player to add.</param>
-		void AddPlayer(IPlayerModel player);
-
-		/// <summary>
-		/// The current the player who's turn it is.
-		/// </summary>
-		/// <returns>The player who's turn it is.</returns>
-		IPlayerModel CurrentPlayer();
+		//		/// <summary>
+		//		/// Add a player to the game.
+		//		/// </summary>
+		//		/// <param name="player">The player to add.</param>
+		//		void AddPlayer(IPlayerModel player);
 
 		#endregion // Properties/Methods
 	}

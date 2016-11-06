@@ -55,7 +55,7 @@ namespace StockMarket.Services
 		/// <returns>The current total value.</returns>
 		/// <param name="player">The player.</param>
 		/// <param name="stockPrice">The stock price tier.</param>
-		public int CalculateCurrentTotalValue(IPlayerModel player, StockPriceTier stockPrice)
+		public int CalculateCurrentTotalShareValue(IPlayerModel player, StockPriceTier stockPrice)
 		{
 			int totalValue = 0;
 			foreach (CompanyType company in System.Enum.GetValues(typeof(CompanyType))) {
@@ -72,7 +72,7 @@ namespace StockMarket.Services
 		/// <param name="stockPrice">The stock price tier to use for calculation.</param>
 		public int CalculateNetWorth(IPlayerModel player, StockPriceTier stockPrice)
 		{
-			return player.Cash + CalculateCurrentTotalValue(player, stockPrice);
+			return player.Cash + CalculateCurrentTotalShareValue(player, stockPrice);
 		}
 
 		/// <summary>
@@ -177,6 +177,20 @@ namespace StockMarket.Services
 			}
 			player.Cash -= fee;
 			return fee;
+		}
+
+		/// <summary>
+		/// Receives the dividend cash per share for the specified company.
+		/// </summary>
+		/// <returns>The dividend received.</returns>
+		/// <param name="player">The player.</param>
+		/// <param name="company">The company.</param>
+		/// <param name="dividendPerShare">The cash dividend per share.</param>
+		public int ReceiveDividend(IPlayerModel player, CompanyType company, int dividendPerShare)
+		{
+			int dividendCash = player.GetShares(company) * dividendPerShare;
+			player.Cash += dividendCash;
+			return dividendCash;
 		}
 
 		/// <summary>

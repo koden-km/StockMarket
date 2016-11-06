@@ -177,12 +177,13 @@
 		{
 			const int TotalBoardTiles = 88;
 			m_BoardTiles = new BoardTileModel[TotalBoardTiles];
+			int i = 0;
 
 			// Setup job tiles ...
-			m_BoardTiles[0] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker100, game);
-			m_BoardTiles[1] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker200, game);
-			m_BoardTiles[2] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker300, game);
-			m_BoardTiles[3] = BoardTileModel.CreateJob(TileType.Job, JobType.Worker400, game);
+			m_BoardTiles[i++] = BoardTileModel.CreateJob(JobType.Worker100, game);
+			m_BoardTiles[i++] = BoardTileModel.CreateJob(JobType.Worker200, game);
+			m_BoardTiles[i++] = BoardTileModel.CreateJob(JobType.Worker300, game);
+			m_BoardTiles[i++] = BoardTileModel.CreateJob(JobType.Worker400, game);
 
 			// Setup game board trader tiles ...
 			// TODO, set them up clockwise or counter-clockwise starting at the stock price UP.

@@ -130,23 +130,14 @@ namespace StockMarket.Models
 			get { return m_Players; }
 		}
 
-		/// <summary>
-		/// Add a player to the game.
-		/// </summary>
-		/// <param name="player">The player to add.</param>
-		public void AddPlayer(IPlayerModel player)
-		{
-			m_Players.Add(player);
-		}
-
-		/// <summary>
-		/// The current the player who's turn it is.
-		/// </summary>
-		/// <returns>The player who's turn it is.</returns>
-		public IPlayerModel CurrentPlayer()
-		{
-			return m_Players[CurrentPlayerIndex];
-		}
+		//		/// <summary>
+		//		/// Add a player to the game.
+		//		/// </summary>
+		//		/// <param name="player">The player to add.</param>
+		//		public void AddPlayer(IPlayerModel player)
+		//		{
+		//			m_Players.Add(player);
+		//		}
 
 		// TODO: this should go on a GameService class. It is game logic.
 		//		/// <summary>
