@@ -70,9 +70,9 @@ namespace StockMarket.Models
 			get { return m_Name; }
 			set {
 				if (m_Name != value) {
-					OnNameChanging(new PlayerModelChangingEventArgs("Name"));
+					OnNameChanging(new PlayerNameEventArgs(m_Name));
 					m_Name = value;
-					OnNameChanged(new PlayerModelChangedEventArgs("Name"));
+					OnNameChanged(new PlayerNameEventArgs(m_Name));
 				}
 			}
 		}

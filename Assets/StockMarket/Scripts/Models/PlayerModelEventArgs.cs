@@ -44,4 +44,42 @@
 		}
 	}
 
+
+
+
+
+	// TODO: New plan.
+	// Make specific event args that contain details of the chainging/changed values,
+	// They should contain all the info that the listeners need, but keeps it separate
+	// from sending the model as is.
+	// Maybe still derive from a common abstract PlayerModelChang(ing|ed)EventArgs.
+	// Something like this:
+
+	/// <summary>
+	/// Player model event arguments.
+	/// </summary>
+	public abstract class PlayerModelEventArgs : System.EventArgs
+	{
+	}
+
+	/// <summary>
+	/// Player name event arguments.
+	/// </summary>
+	public class PlayerNameEventArgs : PlayerModelEventArgs
+	{
+		/// <summary>
+		/// The player name.
+		/// </summary>
+		public readonly string Name;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StockMarket.Models.PlayerNameEventArgs"/> class.
+		/// </summary>
+		/// <param name="name">The player name.</param>
+		public PlayerNameEventArgs(string name)
+		{
+			Name = name;
+		}
+	}
+
 }

@@ -8,11 +8,53 @@ namespace StockMarket.Controllers
 	// TODO: I'm not sure if i need this class, controllers are for talking to views?
 	// So this will only be needed if there is a player view?
 	// Which there might be if there is some HUD for their turn?
+	//
+	// UPDATE:
+	// Ok from reading more about MVC, it does seem like i need this and it will be
+	// used to talk to the view about player moving on the board and HUD elements for
+	// money and shares.
+	// It will hold references to both the Model and the View.
+	// I may want to make a factory to create a "Player" as a concept that constructs
+	// the model, view and controller and hooks them up.
+	// I'm wondering if i should change from namespaces like Models/Views/Controllers
+	// to more of a StockMarket.Player and StockMarket.Board setup to keep everything
+	// near its other parts? In another project i was splitting them similar to this
+	// to keep the scene monobehaviour classes separate for testing, but that shouldn't
+	// be a problem with the better separation of concerns that MVC offers.
 
 
 	public class PlayerController
 	{
-		//private PlayerService m_PlayerService;
+
+
+		//		private IPlayerModel m_Model;
+		//		private IPlayerView m_View;
+		//
+		//		// TODO: put game logic in classes like this...
+		//		// DI this into the constructor and/or have getter/setter for it.
+		//		//private PlayerService m_PlayerService;
+		//
+		//		// TODO: write constructors like this...
+		//		//public PlayerController(IPlayerModel model, IPlayerView view, PlayerService service)
+		//		public PlayerController(IPlayerModel model, IPlayerView view)
+		//		{
+		//			m_Model = model;
+		//			m_View = view;
+		//
+		//			// hook up event handlers
+		//			m_Model.OnNameChanged += HandleNameChanged;
+		//		}
+		//
+		//		// TODO: write handlers like this...
+		//		private void HandleNameChanged(object sender, PlayerNameEventArgs e)
+		//		{
+		//			// TODO: tell the view about the event...
+		//			// should this be done with getter/setter or some other kind of event?
+		//			//m_View.Name = e.Name;
+		//		}
+
+
+
 
 		//public bool DoTurn(PlayerService playerService)
 		public bool DoTurn()
